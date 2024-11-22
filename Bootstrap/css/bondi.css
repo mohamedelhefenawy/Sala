@@ -1,0 +1,95 @@
+*:root{
+    --dark-color :#19283f;
+    --green-color:#33d1cc;
+}
+/* body{
+    font-family: 'Roboto',sans-serif;
+    height: 10000px;
+}
+
+.navbar {
+    background-color: var(--dark-color);
+}
+.navbar-toggler{
+    color: white;
+}
+
+.nav-link{
+    color: white;
+}
+.nav-link.active,
+.nav-link:focus,
+.nav-link:hover
+{
+    color: var(--green-color);
+    display: inline-block;
+    position: relative;
+    transition: color 0.3s ease;
+    
+}
+
+.navbar-nav{
+    position: relative;
+    &::after{
+        content: "";
+        width: 7%;
+        height: 2px;
+        display: block;
+        background-color: var(--green-color);
+        position: absolute;
+        right: -1.5vw;
+        top:50%;
+        transform: translateY(-50%) rotate(90deg);
+
+    }
+}
+@media (max-width:768px){
+.navbar-nav::after{
+display: none;
+}}
+
+svg{
+    color: var(--green-color);
+    margin-left: 1.5vw;
+    font-size: 20px;
+    transition: .3s ease;
+    cursor: pointer;
+
+
+}  */
+
+.section{
+    background-color: #19283f;
+}
+
+
+.carousel-item img {
+    width: 100%; /* Keep width at 100% of the container */
+    height: 90vh; /* Set a fixed height or max-height for all images */
+    object-fit: cover; /* Maintain aspect ratio and crop if needed */
+}
+.badge{
+    cursor: pointer;
+}
+
+.breadcrumb{
+    background-color: #ddd;
+    padding: 30px 5px;
+}
+
+.progress-container {
+    position: relative;
+    width: 100%; /* Adjust as needed */
+  }
+
+  .progress-percentage {
+    position: absolute;
+    top: -20px; 
+    left: 15%; 
+    transform: translateX(-50%);
+    font-weight: bold;
+  }
+
+  .progress {
+    height: 25px; /* Adjust the height of the progress bar */
+  }

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./Bootstrap/css/all.min.css">
+    <link rel="stylesheet" href="./Bootstrap/css/bondi.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+
+    <title>صلاة</title>
+</head>
+
+<body>
+    <section class="location d-flex flex-column">
+        <h1 class="m-3 title">
+            كفر الشيخ
+        </h1>
+        <h2 class="day">  <span class="hist"></span></h2>
+
+    </section>
+
+    <section class="sala row d-flex flex-wrap flex-lg-row-reverse">
+        <div class="col-2 "><h3>الفجر</h3><p class=" fagr"></p></div>
+        <div class="col-2 "><h3>الضهر</h3><p class=" dohr"></p></div>
+        <div class="col-2  "><h3>العصر</h3><p class=" asr"></p></div>
+        <div class="col-2 "><h3>المغرب</h3><p class=" magrb"></p></div>
+        <div class="col-2"><h3>العشاء</h3><p class=" asha"></p></div>
+        
+        
+        
+        
+        
+        
+        
+        
+
+    </section>
+
+    <section style="margin: 0 0 300px;" class="dropdown  d-flex justify-content-center">
+        <div style="padding: 10px 40px; border: 2px solid white; font-size: 25px;" class="badge dropdown-toggle " data-bs-toggle="dropdown" id="x">المدينة</div>
+    
+        <div class="dropdown-menu" aria-labelledby="x">
+          <a href="#" class="dropdown-item" onclick="madina('الرياض')">الرياض</a>
+          <a href="#" class="dropdown-item" onclick="madina('القاهرة')">القاهرة</a>
+          <a href="#" class="dropdown-item" onclick="madina('كفر الشيخ')">كفر الشيخ</a>
+
+        </div>
+    </section>
+    
+    
+
+
+    
+    
+</body>
+<script>
+    let title = document.querySelector('.title')
+
+    function madina(cityname) {
+    title.innerText = cityname;
+    console.log("City Name:", cityname); // Debugging line
+
+    if (cityname === 'القاهرة') {
+        get_sala('EG', 'Al Qāhirah')
+        get_hist('EG', 'Al Qāhirah')
+
+    } else if (cityname === 'كفر الشيخ') {
+        get_sala('EG', 'Kafr ash Shaykh	')
+         get_hist('EG', 'Kafr ash Shaykh')
+    }
+    else if (cityname === 'الرياض'){
+        get_sala('SA', 'Ar Riyāḑ')
+        get_hist('SA', 'Ar Riyāḑ')
+    }
+
+    // This part should be moved inside the conditionals if you want specific behavior per city
+
+}
+
+
+    get_hist('EG','Kafr ash Shaykh')
+
+
+
+    let asha = document.querySelector('.asha')
+    let magrb = document.querySelector('.magrb')
+    let asr = document.querySelector('.asr')
+    let dohr = document.querySelector('.dohr')
+    let fagr = document.querySelector('.fagr')
+    let hist = document.querySelector('.hist')
+    let day = document.querySelector('.day')
+
+
+
+    function get_sala(country,city) {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://api.aladhan.com/v1/timingsByCity?country=${country}&city=${city}`)
+            .then((response) => {
+                const sala = response.data.data.timings;
+
+                asha.innerText = sala.Isha
+                magrb.innerText = sala.Maghrib
+                asr.innerHTML = sala.Asr
+                dohr.innerHTML = sala.Dhuhr
+                fagr.innerText = sala.Fajr
+                
+                
+            })
+            .catch((error) => reject(error)); // Handle errors with reject
+    });
+}
+get_sala('EG','Kafr ash Shaykh')
+// get_sala
+
+// get_sala('EG','Kafr ash Shaykh').then((timings ) => {
+//     asha.innerText = timings.Isha
+//     magrb.innerText = timings.Maghrib
+//     asr.innerHTML = timings.Asr
+//     dohr.innerHTML = timings.Dhuhr
+//     fagr.innerText = timings.Fajr
+
+// }).catch(error => console.error("Error fetching timings:", error));
+
+// get_day
+// function get_day(country,city){
+//     return new Promise((resolve,reject)=>{
+//         axios.get(`http://api.aladhan.com/v1/timingsByCity?country=${country}&city=${city}`).then(
+//             (response)=>{
+//                 const day_hist = response.data.data.date.hijri
+//                 resolve(day_hist.weekday)
+//             }
+//         )
+//     })
+// }
+
+// get_day('EG','Kafr ash Shaykh').then((day_hist)=>{
+//     day.firstChild.nodeValue = day_hist.ar+'  '
+
+// })
+
+// get_hist
+
+function get_hist(country , city){
+    return new Promise((resolve, reject) => {
+        axios.get(`http://api.aladhan.com/v1/timingsByCity?country=${country}&city=${city}`)
+            .then((response) => {
+                const gregorian = response.data.data.date.gregorian;
+                const day_hist = response.data.data.date.hijri.weekday
+                hist.innerHTML = gregorian.date + " "+ day_hist.ar         
+               } )})
+
+            }
+
+
+    get_hist('EG','Kafr ash Shaykh')
+
+
+
+
+
+
+
+
+</script>
+<script src="./Bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./Bootstrap/js/all.min.js"></script>
+    <script src="./Bootstrap/js/jquery-3.7.1.min.js"></script>
+    <script src="./Bootstrap/js/popper.min.js"></script>
+</html>
